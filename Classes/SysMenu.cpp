@@ -24,18 +24,21 @@ bool SysMenu::init()
         return false;
     }
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
+    //可以添加一个全局的if语句来控制声音的开启与关闭
+    if (1) {//1是后续要修改的
+        auto effect_audio1 = AudioEngine::play2d("music/BGMusic.mp3");
+    }
+    auto visibleSize = Director::getInstance()->getVisibleSize();      //获取当前区域可见度的大小，存于Size中，包括长和宽
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();      //获取当前设备可见区域的原点位置，存与origin中，包含x，y
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
+   /* auto closeItem = MenuItemImage::create(
         "CloseNormal.png",
         "CloseSelected.png",
-        CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
+        CC_CALLBACK_1(SysMenu::menuCloseCallback, this));             //生成菜单的函数
 
     if (closeItem == nullptr ||
         closeItem->getContentSize().width <= 0 ||
@@ -45,7 +48,8 @@ bool SysMenu::init()
     }
     else
     {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width / 2;
+        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;   //三个部分组成，可视区域的左下角位0，0位置（也就是origin.x和y的值）
+          //visiblesize是窗口的大小，closeitem获取的是按钮的大小，用按钮的中点来对其想x，y坐标
         float y = origin.y + closeItem->getContentSize().height / 2;
         closeItem->setPosition(Vec2(x, y));
     }
@@ -53,15 +57,53 @@ bool SysMenu::init()
     // create menu, it's an autorelease object
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
+    this->addChild(menu, 1);*/
 
+    
+
+    //生成三个选项按钮
+    Sprite* adventurenormal = Sprite::create("picture/adventure_normal.png");
+    Sprite* bossnormal = Sprite::create("picture/boss_normal.png");
+    Sprite* monsternormal = Sprite::create("picture/monster_normal.png");
+
+    Sprite* adventureselected = Sprite::create("picture/adventure_selected.png");
+    Sprite* bossselected = Sprite::create("picture/boss_selected.png");
+    Sprite* monsterselected = Sprite::create("picture/monster_selected.png");   
+
+    MenuItemSprite* adventure = MenuItemSprite::create(adventurenormal, adventureselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
+    MenuItemSprite* boss = MenuItemSprite::create(bossnormal, bossselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
+    MenuItemSprite* monster = MenuItemSprite::create(monsternormal, monsterselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
+    adventure->setScale(2);
+    boss->setScale(2);
+    monster->setScale(2);
+    
+    Menu*menu1 = Menu::create(adventure, boss, monster, NULL);
+    menu1->alignItemsHorizontallyWithPadding(40);  //横盘排列，同时中间间隔为40
+    menu1->setPosition(Vec2(visibleSize.width / 4+330, visibleSize.height / 4-100)); 
+    this->addChild(menu1, 1);
+     
+    //生成左右两边的按钮
+    Sprite* settingnormal = Sprite::create("picture/setting_normal.png");
+    Sprite* questionnormal = Sprite::create("picture/question_normal.png");
+
+    Sprite* settingselected = Sprite::create("picture/setting_selected.png");
+    Sprite* questionselected = Sprite::create("picture/question_selected.png");
+
+    MenuItemSprite* setting = MenuItemSprite::create(settingnormal, settingselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
+    MenuItemSprite* question = MenuItemSprite::create(questionnormal, questionselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
+    setting->setScale(2);
+    question->setScale(2);
+    Menu* menu2 = Menu::create(setting,question, NULL);
+    menu2->alignItemsHorizontallyWithPadding(visibleSize.width / 2+30);  //横盘排列，同时中间间隔为40
+    menu2->setPosition(Vec2(visibleSize.width / 4 + 370, visibleSize.height / 4+100 ));
+    this->addChild(menu2, 2);
     /////////////////////////////
     // 3. add your codes below...
 
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+    auto label = Label::createWithTTF("Hello Carrot", "fonts/Marker Felt.ttf", 48);     //输出内容+字体+大小
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -69,35 +111,145 @@ bool SysMenu::init()
     else
     {
         // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-            origin.y + visibleSize.height - label->getContentSize().height));
+        label->setPosition(Vec2(origin.x + visibleSize.width/2,
+            origin.y + visibleSize.height  - label->getContentSize().height));
 
         // add the label as a child to this layer
         this->addChild(label, 1);
     }
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
+    //窗口大小1353,908
+    // add "HelloWorld" splash screen"      
+    //放置最底层的背景图
+    auto sprite = Sprite::create("picture/mainscene.png");//在picture文件夹中的图片，若是想要访问，需要添加picture/   。
     if (sprite == nullptr)
     {
-        problemLoading("'HelloWorld.png'");
+        problemLoading("'mainscene.png'");
     }
     else
     {
         // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-
+        sprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);     //让图片的左下角与0 0对齐
+        //sprite->setPosition()功能类似
+        sprite->setScale(1.6);           //图片放大1.6倍
         // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
+        this->addChild(sprite, 0);     //放在最底层
     }
+
+    //放左边的一片叶子
+    auto sprite_leftleaf = Sprite::create("picture/leaf1.png");
+    if (sprite_leftleaf == nullptr)           //传输图片错误
+    {
+        problemLoading("'leaf1.png'");
+    }
+    else
+    {
+        sprite_leftleaf->setPosition(Vec2(origin.x + visibleSize.width / 2-60, 
+            origin.y + visibleSize.height - 3*sprite_leftleaf->getContentSize().height+10));
+        sprite_leftleaf->setScale(1.9);          
+        // add the sprite as a child to this layer
+        this->addChild(sprite_leftleaf, 2);
+    }
+    //放右间的叶子
+    auto sprite_rightleaf = Sprite::create("picture/leaf2.png");
+    if (sprite_rightleaf == nullptr)           //传输图片错误
+    {
+        problemLoading("'leaf2.png'");
+    }
+    else
+    {
+        sprite_rightleaf->setPosition(Vec2(origin.x + visibleSize.width / 2 + 80+60,
+            origin.y + visibleSize.height - 3 * sprite_rightleaf->getContentSize().height));
+        sprite_rightleaf->setScale(1.9);
+        // add the sprite as a child to this layer
+        this->addChild(sprite_rightleaf, 2);
+    }
+    //中间叶子
+    auto sprite_midleaf = Sprite::create("picture/leaf3.png");
+    if (sprite_midleaf == nullptr)           //传输图片错误
+    {
+        problemLoading("'leaf3.png'");
+    }
+    else
+    {
+        sprite_midleaf->setPosition(Vec2(origin.x + visibleSize.width / 2+30, 
+            origin.y + visibleSize.height - 3 * sprite_midleaf->getContentSize().height+80));
+        sprite_midleaf->setScale(2.1);
+        // add the sprite as a child to this layer
+        this->addChild(sprite_midleaf, 3);
+    }
+    //萝卜身体部分
+    auto carrot_body = Sprite::create("picture/mainscene-car.png");
+    if (carrot_body == nullptr)           //传输图片错误
+    {
+        problemLoading("'mainscene-car.png'");
+    }
+    else
+    {
+        carrot_body->setPosition(Vec2(origin.x + visibleSize.width / 2 + 45, 
+            origin.y + visibleSize.height/2 +carrot_body->getContentSize().height/2+30));
+        carrot_body->setScale(2.3);
+        // add the sprite as a child to this layer
+        this->addChild(carrot_body, 4); 
+    }
+    //标题
+    auto mainscene_title = Sprite::create("picture/mainscene1-title.png");
+    if (mainscene_title == nullptr)           //传输图片错误
+    {
+        problemLoading("'mainscene1-title.png'");
+    }
+    else
+    {
+        mainscene_title->setPosition(Vec2(origin.x + visibleSize.width / 2 + 45,
+            origin.y + visibleSize.height / 2 - mainscene_title->getContentSize().height / 2 + 60));
+        mainscene_title->setScale(2.3);
+        // add the sprite as a child to this layer
+        this->addChild(mainscene_title, 5);
+    }
+    //蝙蝠
+    auto mainscene_bat = Sprite::create("picture/mainscene1-bat.png");
+    if (mainscene_bat == nullptr)           //传输图片错误
+    {
+        problemLoading("'mainscene1-bat.png'");
+    }
+    else
+    {
+        mainscene_bat->setPosition(Vec2(origin.x + visibleSize.width / 4 -45,
+            origin.y +3* visibleSize.height / 4 - mainscene_bat->getContentSize().height / 2 + 60));
+        mainscene_bat->setScale(2.0);
+        // add the sprite as a child to this layer
+        this->addChild(mainscene_bat, 2);
+    }
+    this->schedule(CC_SCHEDULE_SELECTOR(SysMenu::update),0.1);
+    //会飘动的
+    auto mainscene_monster = Sprite::create("picture/mainscene1-monster.png");
+    if (mainscene_monster == nullptr)           //传输图片错误
+    {
+        problemLoading("'mainscene1-monster.png'");
+    }
+    else
+    {
+        mainscene_monster->setPosition(Vec2(origin.x + visibleSize.width / 4 - 45,
+            origin.y + 3 * visibleSize.height / 4 + mainscene_monster->getContentSize().height + 90));
+        mainscene_monster->setScale(2.0);//1-2间随机大小
+        // add the sprite as a child to this layer
+        this->addChild(mainscene_monster, 1);    //添加到场景上
+        /*Point position = Point(0, CCRANDOM_0_1() * visibleSize.height);//设置初始位置
+        mainscene_monster->setPosition(position);//放置于特定位置
+        mainscene_monster->runAction(MoveBy::create(2* CCRANDOM_0_1()+1, Point(visibleSize.width, 0)));//完成时间1-3秒，方向向右。*/
+
+    }
+
+
     return true;
+
 }
 
 
 void SysMenu::menuCloseCallback(Ref* pSender)
 {
     //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
+    onButtonEffect();
+    //Director::getInstance()->end();   //终止程序
 
     /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
 
@@ -106,3 +258,11 @@ void SysMenu::menuCloseCallback(Ref* pSender)
 
 
 }
+
+void SysMenu::onButtonEffect() {
+    //此处可以加一个if语句，来控制什么时候让声音输出。
+    auto effect_audio = AudioEngine::play2d("music/Select.mp3");
+}
+
+
+
