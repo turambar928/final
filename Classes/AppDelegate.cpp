@@ -24,7 +24,8 @@
 
 
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+//#include "HelloWorldScene.h"
+#include "SysMenu.h"
 
 // #define USE_AUDIO_ENGINE 1
 
@@ -35,7 +36,7 @@ using namespace cocos2d::experimental;
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(1024, 768);      //µ÷Õû´°¿ÚµÄ´óÐ¡£¬ÓÎÏ·µÄ»ù´¡·Ö±æÂÊ
+static cocos2d::Size designResolutionSize = cocos2d::Size/*(960, 644)*/(1353,908);      //µ÷Õû´°¿ÚµÄ´óÐ¡£¬ÓÎÏ·µÄ»ù´¡·Ö±æÂÊ
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);          //Õë¶Ô¾ßÓÐ½ÏÐ¡ÆÁÄ»µÄÉè±¸£¨ÈçÊÖ»ú£©µÄ·Ö±æÂÊ¡£
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);        //Õë¶Ô¾ßÓÐÖÐµÈÆÁÄ»µÄÉè±¸£¨ÈçÆ½°åµçÄÔ£©µÄ·Ö±æÂÊ¡£
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);        //Õë¶Ô¾ßÓÐ´óÆÁÄ»µÄÉè±¸£¨ÈçµçÊÓ»ò¸ß·Ö±æÂÊµÄÏÔÊ¾Æ÷£©µÄ·Ö±æÂÊ¡£
@@ -110,7 +111,7 @@ bool AppDelegate::applicationDidFinishLaunching() {          //ÓÎÏ·Æô¶¯ÔËÐÐÊ±ËùÊ
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();               //´´½¨³õÊ¼µÄ³¡¾°£¬³õÊ¼»¯
+    auto scene = SysMenu::createScene();               //´´½¨³õÊ¼µÄ³¡¾°£¬³õÊ¼»¯
 
     // run
     director->runWithScene(scene);      //µ¼ÑÝ´Ó´Ë³¡¾°Æô¶¯
