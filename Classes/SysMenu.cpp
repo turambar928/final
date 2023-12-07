@@ -263,8 +263,8 @@ void SysMenu::menuCloseCallback(Ref* pSender)
 
 void SysMenu::onadventure(Ref* pSender) {
     onButtonEffect();
-   //Scene* scene = Adventure_layer;
-
+    Scene* scene = Adventure_layer::scene();
+    Director::getInstance()->replaceScene(TransitionFade::create(2, scene));
 
 }
 void SysMenu::onButtonEffect() {

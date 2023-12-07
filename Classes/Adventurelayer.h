@@ -1,8 +1,8 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef Adventurelayer_H
+#define Adventurelayer_H
 
 #include "cocos2d.h"
-#include"SysMenu.h"
+
 
 USING_NS_CC;
 class Adventure_layer :public Layer {
