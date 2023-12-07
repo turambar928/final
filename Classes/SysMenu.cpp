@@ -1,4 +1,6 @@
+#include"AppDelegate.h"
 #include "SysMenu.h"
+#include"../proj.win32/Adventurelayer.h"
 
 USING_NS_CC;
 
@@ -26,7 +28,7 @@ bool SysMenu::init()
 
     //可以添加一个全局的if语句来控制声音的开启与关闭
     if (1) {//1是后续要修改的
-        auto effect_audio1 = AudioEngine::play2d("music/BGMusic.mp3");
+        auto effect_audio1 = AudioEngine::play2d("music/BGMusic.mp3",1);//1表示循环播放
     }
     auto visibleSize = Director::getInstance()->getVisibleSize();      //获取当前区域可见度的大小，存于Size中，包括长和宽
     Vec2 origin = Director::getInstance()->getVisibleOrigin();      //获取当前设备可见区域的原点位置，存与origin中，包含x，y
@@ -70,7 +72,7 @@ bool SysMenu::init()
     Sprite* bossselected = Sprite::create("picture/boss_selected.png");
     Sprite* monsterselected = Sprite::create("picture/monster_selected.png");   
 
-    MenuItemSprite* adventure = MenuItemSprite::create(adventurenormal, adventureselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
+    MenuItemSprite* adventure = MenuItemSprite::create(adventurenormal, adventureselected, CC_CALLBACK_1(SysMenu::onadventure, this));
     MenuItemSprite* boss = MenuItemSprite::create(bossnormal, bossselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
     MenuItemSprite* monster = MenuItemSprite::create(monsternormal, monsterselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
     adventure->setScale(2);
@@ -221,7 +223,7 @@ bool SysMenu::init()
     }
     this->schedule(CC_SCHEDULE_SELECTOR(SysMenu::update),0.1);
     //会飘动的
-    auto mainscene_monster = Sprite::create("picture/mainscene1-monster.png");
+    mainscene_monster = Sprite::create("picture/mainscene1-monster.png");
     if (mainscene_monster == nullptr)           //传输图片错误
     {
         problemLoading("'mainscene1-monster.png'");
@@ -232,10 +234,10 @@ bool SysMenu::init()
             origin.y + 3 * visibleSize.height / 4 + mainscene_monster->getContentSize().height + 90));
         mainscene_monster->setScale(2.0);//1-2间随机大小
         // add the sprite as a child to this layer
-        this->addChild(mainscene_monster, 1);    //添加到场景上
-        /*Point position = Point(0, CCRANDOM_0_1() * visibleSize.height);//设置初始位置
-        mainscene_monster->setPosition(position);//放置于特定位置
-        mainscene_monster->runAction(MoveBy::create(2* CCRANDOM_0_1()+1, Point(visibleSize.width, 0)));//完成时间1-3秒，方向向右。*/
+        this->addChild(mainscene_monster, 10);    //添加到场景上
+        Point position = Point(0, CCRANDOM_0_1() * visibleSize.height);//设置初始位置
+        //mainscene_monster->setPosition(position);//放置于特定位置
+        mainscene_monster->runAction(MoveBy::create(2* CCRANDOM_0_1()+1, Point(visibleSize.width, 0)));//完成时间1-3秒，方向向右。
 
     }
 
@@ -259,10 +261,22 @@ void SysMenu::menuCloseCallback(Ref* pSender)
 
 }
 
+void SysMenu::onadventure(Ref* pSender) {
+    onButtonEffect();
+   //Scene* scene = Adventure_layer;
+
+
+}
 void SysMenu::onButtonEffect() {
     //此处可以加一个if语句，来控制什么时候让声音输出。
     auto effect_audio = AudioEngine::play2d("music/Select.mp3");
 }
 
-
+void SysMenu::update(float dt) {
+    if (mainscene_monster->getPosition().x > 1353) {
+        Point pos = Point(60, CCRANDOM_0_1() * 908);
+        mainscene_monster->setPosition(pos);
+        mainscene_monster->runAction(MoveBy::create(floor(20 * CCRANDOM_0_1()), Point(1353, 0)));//前一个参数控制运动的时间，后一个参数控制运动的距离
+    }
+}
 
