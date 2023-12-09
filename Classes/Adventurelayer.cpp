@@ -1,6 +1,7 @@
 #include"Adventurelayer.h"
 #include"SysMenu.h"
 #include"2d/CCMenu.h"
+
 USING_NS_CC;
 Scene* Adventure_layer::scene()
 {

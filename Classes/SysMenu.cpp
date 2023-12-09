@@ -1,6 +1,8 @@
 #include"AppDelegate.h"
 #include "SysMenu.h"
+#include"../proj.win32/setting.h"
 #include"../proj.win32/Adventurelayer.h"
+
 
 USING_NS_CC;
 
@@ -91,7 +93,7 @@ bool SysMenu::init()
     Sprite* settingselected = Sprite::create("picture/setting_selected.png");
     Sprite* questionselected = Sprite::create("picture/question_selected.png");
 
-    MenuItemSprite* setting = MenuItemSprite::create(settingnormal, settingselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
+    MenuItemSprite* setting = MenuItemSprite::create(settingnormal, settingselected, CC_CALLBACK_1(SysMenu::onsetting, this));
     MenuItemSprite* question = MenuItemSprite::create(questionnormal, questionselected, CC_CALLBACK_1(SysMenu::menuCloseCallback, this));
     setting->setScale(2);
     question->setScale(2);
@@ -259,6 +261,12 @@ void SysMenu::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
+}
+
+void SysMenu::onsetting(Ref* pSender) {
+    onButtonEffect();
+    Scene* scene = setting_layer::scene();
+    Director::getInstance()->replaceScene(TransitionFade::create(2, scene));
 }
 
 void SysMenu::onadventure(Ref* pSender) {
