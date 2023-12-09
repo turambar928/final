@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include"AudioEngine.h"
 #include"Adventurelayer.h"
-#include"setting.h"
 class SysMenu : public cocos2d::Scene
 {
 public:
@@ -25,12 +24,14 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-    
+    virtual void onEnter();
     // implement the "static create()" method manually
-    CREATE_FUNC(SysMenu);             //相当于一个整体的析构函数，清除上述部分所create的所有
+   
 private:
     cocos2d::Sprite* mainscene_monster;  //必须加cocos2d
+    Size winSize;
 
+    CREATE_FUNC(SysMenu);             //相当于一个整体的析构函数，清除上述部分所create的所有
 };
 
 #endif // __HELLOWORLD_SCENE_H__

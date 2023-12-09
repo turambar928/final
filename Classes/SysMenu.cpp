@@ -1,9 +1,7 @@
 #include"AppDelegate.h"
 #include "SysMenu.h"
-#include"../proj.win32/setting.h"
-#include"../proj.win32/Adventurelayer.h"
-
-
+#include"Adventurelayer.h"
+#include"setting.h"
 USING_NS_CC;
 
 Scene* SysMenu::createScene()
@@ -29,9 +27,7 @@ bool SysMenu::init()
     }
 
     //可以添加一个全局的if语句来控制声音的开启与关闭
-    if (1) {//1是后续要修改的
-        auto effect_audio1 = AudioEngine::play2d("music/BGMusic.mp3",1);//1表示循环播放
-    }
+    winSize= Director::getInstance()->getVisibleSize();
     auto visibleSize = Director::getInstance()->getVisibleSize();      //获取当前区域可见度的大小，存于Size中，包括长和宽
     Vec2 origin = Director::getInstance()->getVisibleOrigin();      //获取当前设备可见区域的原点位置，存与origin中，包含x，y
     /////////////////////////////
@@ -263,17 +259,17 @@ void SysMenu::menuCloseCallback(Ref* pSender)
 
 }
 
-void SysMenu::onsetting(Ref* pSender) {
-    onButtonEffect();
-    Scene* scene = setting_layer::scene();
-    Director::getInstance()->replaceScene(TransitionFade::create(2, scene));
-}
-
 void SysMenu::onadventure(Ref* pSender) {
     onButtonEffect();
     Scene* scene = Adventure_layer::scene();
     Director::getInstance()->replaceScene(TransitionFade::create(2, scene));
 
+}
+
+void SysMenu::onsetting(Ref* pSender) {
+    onButtonEffect();
+    Scene* scene = setting_layer::scene();
+    Director::getInstance()->replaceScene(TransitionFade::create(2, scene));
 }
 void SysMenu::onButtonEffect() {
     //此处可以加一个if语句，来控制什么时候让声音输出。
@@ -281,10 +277,31 @@ void SysMenu::onButtonEffect() {
 }
 
 void SysMenu::update(float dt) {
-    if (mainscene_monster->getPosition().x > 1353) {
-        Point pos = Point(60, CCRANDOM_0_1() * 908);
+    if (mainscene_monster->getPosition().x > winSize.width) {
+        Point pos = Point(60, CCRANDOM_0_1() * winSize.height);
         mainscene_monster->setPosition(pos);
         mainscene_monster->runAction(MoveBy::create(floor(20 * CCRANDOM_0_1()), Point(1353, 0)));//前一个参数控制运动的时间，后一个参数控制运动的距离
     }
 }
 
+void SysMenu::onEnter() {//这个函数在进入窗口的时候就会执行
+    Scene::onEnter();
+    int judgemusic = 0;
+    // 检查是否正在播放背景音乐
+    if (AudioEngine::getState(judgemusic) == AudioEngine::AudioState::PLAYING)
+    {
+        // 获取当前播放的音乐文件名
+        //std::string currentMusic;
+
+        // 检查当前播放的音乐是否是你需要的音乐
+        //if (currentMusic == "BGMusic.mp3")
+        //{
+            // 如果不是你需要的音乐，那么停止
+            
+        //AudioEngine::stop(judgemusic);
+        //}
+    }
+    else {
+        auto effect_audio1 = AudioEngine::play2d("music/BGMusic.mp3", 1);
+    }
+}
