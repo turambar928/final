@@ -238,8 +238,18 @@ bool SysMenu::init()
         mainscene_monster->runAction(MoveBy::create(2* CCRANDOM_0_1()+1, Point(visibleSize.width, 0)));//完成时间1-3秒，方向向右。
 
     }
-
-
+    auto Mon1 = Sprite::create("picture/Mon1_1.png");
+    Mon1->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+    this->addChild(Mon1, 20);
+    auto animation = Animation::create();//创建了一个新的动画对象。
+    animation->addSpriteFrameWithFile("picture/Mon1_1.png");
+    animation->addSpriteFrameWithFile("picture/Mon1_2.png");//将两个图像帧添加到动画中。
+    animation->setDelayPerUnit(0.5f);   //设置了每帧动画的延迟时间，即每帧动画显示0.5秒
+    animation->setLoops(-1);      //设置了动画循环的次数，-1表示动画会无限循环
+    animation->setRestoreOriginalFrame(true); //设置了动画播放完毕后是否恢复到第一帧
+    auto animate = Animate::create(animation);
+    Mon1->runAction(animate);//使其执行动画
+    
     return true;
 
 }
