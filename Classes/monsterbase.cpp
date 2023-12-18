@@ -1,5 +1,6 @@
 #include "monsterbase.h"
-
+#include"Mon1.h"
+#include"myresource.h"
 int Mon::mon_id;
 
 void Mon::Mon_init() {
@@ -11,6 +12,11 @@ void Mon::sprite_init(const Vec2& position_) {
 	sprite->setPosition(position_);
 }
 
+void readpath() {
+	int i = mypath.size();
+	mypathjudge[0] = 1;
+	
+}
 // 设置精灵的大小  参数：缩放倍数
 void Mon::set_scale(float val_) {
 	sprite->setScale(val_);
@@ -58,17 +64,22 @@ void Mon::init_mon_die_animation() {
 
 //时间开销分析
 //就是额外构造俩对象的开销,不用从内存读数据，和原有的代码差不多
-bool Mon::run_mon_move_animation() {
-	if (is_dead) return false;
-	if (sprite == nullptr || mon_move_animate == nullptr) return false;
+bool Mon::run_mon_move_animation(int i) {
+	
+	if (is_dead==true) {return false;}  //未找到原因，is_dead在初始完成后结果为1
+	if (sprite == nullptr || mon_move_animate == nullptr) { 
+		return false; }
 	is_dead = false;
 	//is_eat = false;
 	is_move = true;
 	//is_wait = false;
 	sprite->stopAllActions();
 	sprite->runAction(RepeatForever::create(
-		Animate::create(Animation::createWithSpriteFrames(mon_move, 1.0 / 10)))); // 运行移动动画
-	sprite->runAction(MoveTo::create(5.0f, Vec2(-100.0, get_y())));  // 可修改移动速度 此时还需要修改
+		Animate::create(Animation::createWithSpriteFrames(mon_move, 1.0/2)))); // 运行移动动画,每帧之间的延迟是1秒
+	sprite->runAction(MoveTo::create(5.0f, Vec2(mypath[i].x, mypath[i].y)));  // 5秒内移动到给定的坐标位置.可修改移动速度 此时还需要修改
+	
+	return true;
+	
 }
 
 void Mon::run_mon_die_animation() {

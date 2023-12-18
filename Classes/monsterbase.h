@@ -32,17 +32,20 @@ public:
 	virtual void init_mon_move_animation();
 	virtual void init_mon_die_animation();
 	//运行动作
-	virtual bool run_mon_move_animation();
+	virtual bool run_mon_move_animation(int i);
 	virtual void run_mon_die_animation();
 	//设置状态
 	virtual bool judge_dead() const;
 	virtual bool judge_move() const;
+	//读取路径并移动
+	void readpath();
 	//变量
-	static int mon_id; // 僵尸编号 唯一性
+	static int mon_id; // 编号 唯一性
 	double blood;	// 血量
 	double time_count;// 时间计时器  统计使用精灵 到结束
 	float move_rate; // 移速
 	double attack_num; //攻击值
+	int money;
 
 	Vec2 position;//二维位置 变量
 	Sprite* sprite;// 精灵变量
@@ -57,9 +60,9 @@ public:
 	//僵尸类型 enum 结合switch遍历
 	MonType mon_type;
 	//僵尸状态变量
-	bool is_move;//僵尸是否处于行走状态
-	bool is_dead;//僵尸是否已经死亡
-	int row;
+	bool is_move;//是否处于行走状态
+	bool is_dead;//是否已经死亡
+	//int row;
 };
 
 

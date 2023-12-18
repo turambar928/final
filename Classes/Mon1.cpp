@@ -1,7 +1,7 @@
 #include "cocos2d.h"
 #include "Mon1.h"
 #include "AudioEngine.h"
-
+#include "myresource.h"
 USING_NS_CC;
 
 bool Mon1::is_run_frame = false; // 已经初始化  构造函数不用
@@ -20,10 +20,23 @@ Mon1::Mon1() {
 
 }
 
+
 void Mon1::update(float update_time) {
 	time_count += update_time;
-
 	//auto move_sound = AudioEngine::play2d("Music/.ogg", true);//没有
+	
+	if (get_x()==mypath[1].x&&get_y()==mypath[1].y) {
+		/*sprite->stopAllActions();
+		sprite->runAction(RepeatForever::create(
+			Animate::create(Animation::createWithSpriteFrames(mon_move, 1.0 / 2)))); // 运行移动动画,每帧之间的延迟是1秒
+		sprite->runAction(MoveTo::create(5.0f, Vec2(mypath[2].x, mypath[2].y)));  // 5秒内移动到给定的坐标位置.可修改移动速度 此时还需要修改
+		*/
+		sprite->setPosition(Vec2(get_x() + 200, get_y()));
+	}
+
+	
+	
+
 	//auto eat_sound = AudioEngine::play2d("Music/chomp.ogg", true);
 	if (is_dead) {
 		this->unscheduleUpdate();
@@ -36,10 +49,11 @@ void Mon1::mon_init() {
 	this->blood = 10;	// 血量
 	this->time_count = 0.0;// 时间计时器  统计使用精灵 到结束
 	this->attack_num = 1; //攻击值
-	this->move_rate = 0; // 移速 相对于移动时间
+	this->move_rate = 10; // 移速 相对于移动时间
 	this->mon_type = MonType::Mon_typel; //僵尸类型
 	this->is_move = false;//是否处于行走状态
 	this->is_dead = false;//是否已经死亡
+	this->money = 1;
 }// 变量初始化
 
 void Mon1::init_mon_move_animation() {
@@ -55,14 +69,17 @@ void Mon1::init_mon_move_animation() {
 	//mon_move_animate = Animate::create(animation);
 	//Mon1->runAction(animate);//使其执行动画
 	//SpriteFrameCache::getInstance()->addSpriteFramesWithFile("ZomBies/NomalZombie/ZombieMove/Zombie_default.plist");
-	mon_move = getAnimation("pciture/Mon1_%d.png", 2); // 调用加载图片
+	
+	mon_move = getAnimation("picture/Mon1_%d.png", 2); // 调用加载图片
+	sprite = Sprite::createWithSpriteFrame(mon_move.front());
 	auto animation1 = Animation::createWithSpriteFrames(mon_move, 1.0 / 5); // 缓存时间 约小则加载越快  
 	mon_move_animate = Animate::create(animation1);
 
 }
 
 void Mon1::init_mon_die_animation() { //死亡动画
-	mon_die = getAnimation("pciture/Mondie%d.png", 6); // 调用加载图片
+	mon_die = getAnimation("picture/Mondie%d.png", 6); // 调用加载图片
+	sprite = Sprite::createWithSpriteFrame(mon_die.front());
 	auto animation1 = Animation::createWithSpriteFrames(mon_die, 1.0 / 5); // 缓存时间 约小则加载越快  
 	mon_die_animate = Animate::create(animation1);
 }

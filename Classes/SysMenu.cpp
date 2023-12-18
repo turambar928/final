@@ -219,7 +219,7 @@ bool SysMenu::init()
         // add the sprite as a child to this layer
         this->addChild(mainscene_bat, 2);
     }
-    this->schedule(CC_SCHEDULE_SELECTOR(SysMenu::update),0.1);
+    this->schedule(CC_SCHEDULE_SELECTOR(SysMenu::update),0.1/10);
     //会飘动的
     mainscene_monster = Sprite::create("picture/mainscene1-monster.png");
     if (mainscene_monster == nullptr)           //传输图片错误
@@ -233,9 +233,9 @@ bool SysMenu::init()
         mainscene_monster->setScale(2.0);//1-2间随机大小
         // add the sprite as a child to this layer
         this->addChild(mainscene_monster, 10);    //添加到场景上
-        Point position = Point(0, CCRANDOM_0_1() * visibleSize.height);//设置初始位置
+        //Point position = Point(0, CCRANDOM_0_1() * visibleSize.height);//设置初始位置
         //mainscene_monster->setPosition(position);//放置于特定位置
-        mainscene_monster->runAction(MoveBy::create(2* CCRANDOM_0_1()+1, Point(visibleSize.width, 0)));//完成时间1-3秒，方向向右。
+       // mainscene_monster->runAction(MoveBy::create(2* CCRANDOM_0_1()+1, Point(visibleSize.width, 0)));//完成时间1-3秒，方向向右。
 
     }
     auto Mon1 = Sprite::create("picture/Mon1_1.png");
@@ -287,11 +287,19 @@ void SysMenu::onButtonEffect() {
 }
 
 void SysMenu::update(float dt) {
-    if (mainscene_monster->getPosition().x > winSize.width) {
+    Vec2 a = mainscene_monster->getPosition();
+    if (a.x > winSize.width) {
+        Point pos = Point(60, CCRANDOM_0_1() * winSize.height);
+        mainscene_monster->setPosition(pos);
+    }
+    else {
+        mainscene_monster->setPosition(Vec2(a.x + 10, a.y));
+    }
+   /* if (mainscene_monster->getPosition().x > winSize.width) {
         Point pos = Point(60, CCRANDOM_0_1() * winSize.height);
         mainscene_monster->setPosition(pos);
         mainscene_monster->runAction(MoveBy::create(floor(20 * CCRANDOM_0_1()), Point(1353, 0)));//前一个参数控制运动的时间，后一个参数控制运动的距离
-    }
+    }*/
 }
 
 void SysMenu::onEnter() {//这个函数在进入窗口的时候就会执行

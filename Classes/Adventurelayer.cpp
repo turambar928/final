@@ -89,7 +89,7 @@ void Adventure_layer::onStart(Ref* pSender) {
 	onButtonEffect();
 	//onEnter();
 	Scene* scene = level1::scene();
-	Director::getInstance()->replaceScene(TransitionFade::create(1.2, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5, scene));
 }
 
 void Adventure_layer::onEnter() {//这个函数在进入窗口的时候就会执行
