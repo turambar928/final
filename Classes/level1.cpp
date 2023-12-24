@@ -24,21 +24,21 @@ bool level1::init() {
 	Size piece;
 	piece.width = winSize.width / 12;
 	piece.height = winSize.height / 8;
-	mypath.push_back(Vec2(1.5*piece.width,5.5*piece.height));
+	mypath.push_back(Vec2(1.5*piece.width,5.5*piece.height+25));
 	mypathjudge.push_back(0);
-	mypath.push_back(Vec2(1.5 * piece.width, 2.5 * piece.height));
+	mypath.push_back(Vec2(1.5 * piece.width, 2.5 * piece.height+25));
 	mypathjudge.push_back(0);
-	mypath.push_back(Vec2(4.5 * piece.width, 2.5 * piece.height));
+	mypath.push_back(Vec2(4.5 * piece.width, 2.5 * piece.height+25));
 	mypathjudge.push_back(0);
-	mypath.push_back(Vec2(4.5 * piece.width, 3.5 * piece.height));
+	mypath.push_back(Vec2(4.5 * piece.width, 3.5 * piece.height+25));
 	mypathjudge.push_back(0);
-	mypath.push_back(Vec2(7.5 * piece.width, 3.5 * piece.height));
+	mypath.push_back(Vec2(7.5 * piece.width, 3.5 * piece.height+25));
 	mypathjudge.push_back(0);
-	mypath.push_back(Vec2(7.5 * piece.width, 2.5 * piece.height));
+	mypath.push_back(Vec2(7.5 * piece.width, 2.5 * piece.height+25));
 	mypathjudge.push_back(0);
-	mypath.push_back(Vec2(10.5 * piece.width, 2.5 * piece.height));
+	mypath.push_back(Vec2(10.5 * piece.width, 2.5 * piece.height+25));
 	mypathjudge.push_back(0);
-	mypath.push_back(Vec2(10.5 * piece.width, 5.5 * piece.height));
+	mypath.push_back(Vec2(10.5 * piece.width, 5.5 * piece.height+25));
 	mypathjudge.push_back(0);
 	Sprite* level1back = Sprite::create("picture/level1back.png");
 	level1back->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
@@ -57,11 +57,12 @@ bool level1::init() {
 	//Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 	//注册事件监听器到主事件循环中。这样，当用户在屏幕上触摸屏幕时，就会触发相应的回调函数，并执行其中的逻辑。
 	
-    Mon* temp_mon = new Mon1();//初始化is_dead的初始化似乎有问题
+    Mon* temp_mon = new Mon1();
 	temp_mon->sprite_init(Vec2(mypath[0].x, mypath[0].y));
-	//temp_mon->run_mon_move_animation(1);
-	my_mon.push_back(temp_mon);
 	this->addChild(temp_mon->sprite, 3);
+	temp_mon->run_mon_move_animation();
+	my_mon.push_back(temp_mon);
+	
 	/*if (temp_mon->is_move == false) {
 		auto sprite_leftleaf = Sprite::create("picture/leaf1.png");
 

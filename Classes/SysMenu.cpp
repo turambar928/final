@@ -236,7 +236,6 @@ bool SysMenu::init()
         //Point position = Point(0, CCRANDOM_0_1() * visibleSize.height);//设置初始位置
         //mainscene_monster->setPosition(position);//放置于特定位置
        // mainscene_monster->runAction(MoveBy::create(2* CCRANDOM_0_1()+1, Point(visibleSize.width, 0)));//完成时间1-3秒，方向向右。
-
     }
     auto Mon1 = Sprite::create("picture/Mon1_1.png");
     Mon1->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
@@ -295,6 +294,7 @@ void SysMenu::update(float dt) {
     else {
         mainscene_monster->setPosition(Vec2(a.x + 10, a.y));
     }
+   
 
 
 

@@ -32,7 +32,7 @@ public:
 	virtual void init_mon_move_animation();
 	virtual void init_mon_die_animation();
 	//运行动作
-	virtual bool run_mon_move_animation(int i);
+	virtual bool run_mon_move_animation();
 	virtual void run_mon_die_animation();
 	//设置状态
 	virtual bool judge_dead() const;

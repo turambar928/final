@@ -9,7 +9,7 @@ bool Mon1::is_run_frame = false; // 已经初始化  构造函数不用
 //构造函数，调用init（）函数，然后加载两个init动画
 Mon1::Mon1() {
 	//类属性的初始化
-	this->Mon_init();
+	this->mon_init();
 	this->init_mon_move_animation();
 	this->init_mon_die_animation();
 	sprite = Sprite::create();
@@ -25,14 +25,10 @@ void Mon1::update(float update_time) {
 	time_count += update_time;
 	//auto move_sound = AudioEngine::play2d("Music/.ogg", true);//没有
 	
-	if (get_x()==mypath[1].x&&get_y()==mypath[1].y) {
-		/*sprite->stopAllActions();
-		sprite->runAction(RepeatForever::create(
-			Animate::create(Animation::createWithSpriteFrames(mon_move, 1.0 / 2)))); // 运行移动动画,每帧之间的延迟是1秒
-		sprite->runAction(MoveTo::create(5.0f, Vec2(mypath[2].x, mypath[2].y)));  // 5秒内移动到给定的坐标位置.可修改移动速度 此时还需要修改
-		*/
-		sprite->setPosition(Vec2(get_x() + 200, get_y()));
-	}
+	/*if (my_mon[0]->get_x() == mypath[1].x && my_mon[0]->get_y() == mypath[1].y) {
+		
+		my_mon[0]->sprite->setPosition(Vec2(mypath[2].x, mypath[2].y));
+	}*/
 
 	
 	
@@ -45,11 +41,11 @@ void Mon1::update(float update_time) {
 } //调度函数  参数调度时间间隔
 
 void Mon1::mon_init() {
-	this->mon_id = -1; // 编号 
+	this->mon_id = 1; // 编号 
 	this->blood = 10;	// 血量
 	this->time_count = 0.0;// 时间计时器  统计使用精灵 到结束
 	this->attack_num = 1; //攻击值
-	this->move_rate = 10; // 移速 相对于移动时间
+	this->move_rate = 100; // 移速 相对于移动时间
 	this->mon_type = MonType::Mon_typel; //僵尸类型
 	this->is_move = false;//是否处于行走状态
 	this->is_dead = false;//是否已经死亡
@@ -57,19 +53,6 @@ void Mon1::mon_init() {
 }// 变量初始化
 
 void Mon1::init_mon_move_animation() {
-	//auto Mon1 = Sprite::create("picture/Mon1_1.png");
-	//Mon1->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	//this->addChild(Mon1, 20);
-	//auto animation = Animation::create();//创建了一个新的动画对象。
-	//animation->addSpriteFrameWithFile("picture/Mon1_1.png");
-	//animation->addSpriteFrameWithFile("picture/Mon1_2.png");//将两个图像帧添加到动画中。
-	//animation->setDelayPerUnit(0.5f);   //设置了每帧动画的延迟时间，即每帧动画显示0.5秒
-	//animation->setLoops(-1);      //设置了动画循环的次数，-1表示动画会无限循环
-	//animation->setRestoreOriginalFrame(true); //设置了动画播放完毕后是否恢复到第一帧
-	//mon_move_animate = Animate::create(animation);
-	//Mon1->runAction(animate);//使其执行动画
-	//SpriteFrameCache::getInstance()->addSpriteFramesWithFile("ZomBies/NomalZombie/ZombieMove/Zombie_default.plist");
-	
 	mon_move = getAnimation("picture/Mon1_%d.png", 2); // 调用加载图片
 	sprite = Sprite::createWithSpriteFrame(mon_move.front());
 	auto animation1 = Animation::createWithSpriteFrames(mon_move, 1.0 / 5); // 缓存时间 约小则加载越快  
