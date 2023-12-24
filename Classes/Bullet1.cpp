@@ -83,7 +83,7 @@ void Bullet1::update(double update_time) {
 	}
 } // 
 //创建子弹移动动画 
-void Bullet::bullet_move_animation() {
+void Bullet1::bullet_move_animation() {
 	//auto bullet_movement = MoveTo::create(2.0f, Vec2(1000,position.y)); // Position of the leftmost zombie in that row
 	//sprite->setScale(1.0f);
 	//auto bullet_move_animate = Sequence::create(bullet_callback_audio, bullet_movement, nullptr);
