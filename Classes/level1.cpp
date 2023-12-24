@@ -59,6 +59,7 @@ bool level1::init() {
 	
     Mon* temp_mon = new Mon1();
 	temp_mon->sprite_init(Vec2(mypath[0].x, mypath[0].y));
+	//添加到界面上
 	this->addChild(temp_mon->sprite, 3);
 	temp_mon->run_mon_move_animation();
 	my_mon.push_back(temp_mon);
