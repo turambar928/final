@@ -59,9 +59,9 @@ bool level1::init() {
 	
     Mon* temp_mon = new Mon1();//初始化is_dead的初始化似乎有问题
 	temp_mon->sprite_init(Vec2(mypath[0].x, mypath[0].y));
-	temp_mon->run_mon_move_animation(1);
-	
-
+	//temp_mon->run_mon_move_animation(1);
+	my_mon.push_back(temp_mon);
+	this->addChild(temp_mon->sprite, 3);
 	/*if (temp_mon->is_move == false) {
 		auto sprite_leftleaf = Sprite::create("picture/leaf1.png");
 
@@ -72,7 +72,7 @@ bool level1::init() {
 		// add the sprite as a child to this layer
 		this->addChild(sprite_leftleaf, 3);
 	}*/
-	this->addChild(temp_mon->sprite, 3);
+	
 	/*
 	// 创建Mon1对象
 	Mon1* temp_mon = new Mon1();
@@ -117,3 +117,4 @@ void level1::onEnter() {//这个函数在进入窗口的时候就会执行
 	}
 
 }
+

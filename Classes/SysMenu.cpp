@@ -249,7 +249,7 @@ bool SysMenu::init()
     animation->setRestoreOriginalFrame(true); //设置了动画播放完毕后是否恢复到第一帧
     auto animate = Animate::create(animation);
     Mon1->runAction(animate);//使其执行动画
-    
+
     return true;
 
 }
@@ -295,6 +295,9 @@ void SysMenu::update(float dt) {
     else {
         mainscene_monster->setPosition(Vec2(a.x + 10, a.y));
     }
+
+
+
    /* if (mainscene_monster->getPosition().x > winSize.width) {
         Point pos = Point(60, CCRANDOM_0_1() * winSize.height);
         mainscene_monster->setPosition(pos);
