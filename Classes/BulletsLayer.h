@@ -3,9 +3,6 @@
 
 #include "EntityLayerBase.h"
 
-/**
- *  BulletsLayer use to show Bullet
- */
 
 class BulletsLayer:public EntityLayerBase
 {
