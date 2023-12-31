@@ -1,11 +1,3 @@
-//
-//  BulletManager.h
-//  CarrotFantasy
-//
-//  Created by Yan on 14-9-13.
-//
-//
-
 #ifndef __CarrotFantasy__BulletManager__
 #define __CarrotFantasy__BulletManager__
 
@@ -53,4 +45,4 @@ private:
     
 };
 
-#endif /* defined(__CarrotFantasy__BulletManager__) */
+#endif
