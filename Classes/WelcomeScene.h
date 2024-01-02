@@ -1,3 +1,4 @@
+//start
 #ifndef __newCardDefence__WelcomeScene__
 #define __newCardDefence__WelcomeScene__
 
@@ -9,21 +10,17 @@ class WelcomeScene:public Scene
 public:
     
     CREATE_FUNC(WelcomeScene);
-    
     virtual ~WelcomeScene();
     
 protected:
     
-    virtual bool init();
-    
     virtual void onEnter()override;
-    
+    virtual bool init();
     virtual void showMenu();
 
 private:
     
-    Layer *_pSpritesLayer = nullptr;
-    
+    Layer *_pSpritesLayer = nullptr; 
     Layer *_pMenusLayer = nullptr;
 
 };
