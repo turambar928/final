@@ -1,11 +1,3 @@
-//
-//  WelcomeScene.h
-//  newCardDefence
-//
-//  Created by Yan on 14-8-27.
-//
-//
-
 #ifndef __newCardDefence__WelcomeScene__
 #define __newCardDefence__WelcomeScene__
 
